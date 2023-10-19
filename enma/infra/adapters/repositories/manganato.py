@@ -62,7 +62,7 @@ class Manganato(IMangaRepository):
                                height=0) for img in images_container.find_all('img')]
         return chapter
 
-    def get(self, identifier: str) -> Manga | None:
+    def get(self, identifier: str) -> Union[Manga, None]:
         response = self.__make_request(url=urljoin(self.__CHAPTER_BASE_URL, identifier))
         
         if response.status_code != 200:
