@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import Union
 from enma.application.core.interfaces.manga_repository import IMangaRepository
 from enma.application.core.interfaces.use_case import DTO, IUseCase
 from enma.domain.entities.search_result import SearchResult
@@ -7,7 +8,7 @@ from enma.domain.entities.search_result import SearchResult
 class SearchMangaRequestDTO:
     query: str
     page: int = field(default=1)
-    extra: dict[str, str | int] = field(default_factory=dict)
+    extra: dict[str, Union[str, int]] = field(default_factory=dict)
 
 @dataclass
 class SearchMangaResponseDTO:
