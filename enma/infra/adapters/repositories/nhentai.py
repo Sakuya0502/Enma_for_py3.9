@@ -4,7 +4,7 @@ It contains functions and classes to interact with the nhentai API and retrieve 
 """
 
 from dataclasses import dataclass
-from typing import Any, Literal, Optional, cast
+from typing import Any, Literal, Optional, cast, Union
 from urllib.parse import urlparse, urljoin
 from enum import Enum
 from bs4 import BeautifulSoup, Tag
@@ -45,8 +45,8 @@ class NHentai(IMangaRepository):
 
     def __make_request(self, 
                        url: str,
-                       headers: dict[str, Any] | None = None,
-                       params: Optional[dict[str, str | int]] = None):
+                       headers: Union[dict[str, Any], None] = None,
+                       params: Optional[dict[str, Union[str, int]]] = None):
 
         if self.__config is None:
             raise NhentaiSourceWithoutConfig('Please provide a valid cloudflare cookie and user-agent.')
@@ -63,7 +63,7 @@ class NHentai(IMangaRepository):
         self.__config = config
     
     def __make_page_uri(self, 
-                        type: Literal['cover'] | Literal['page'] | Literal['thumbnail'],
+                        type: Union[Literal['cover'], Literal['page'], Literal['thumbnail']],
                         media_id: str,
                         mime: MIME,
                         page_number: Optional[int] = None) -> str:
@@ -71,7 +71,7 @@ class NHentai(IMangaRepository):
         if type == 'thumbnail': return urljoin(self.__TINY_IMAGE_BASE_URL, f'{media_id}/thumb.{mime.value}')
         return urljoin(self.__IMAGE_BASE_URL, f'{media_id}/{page_number}.{mime.value}')
 
-    def get(self, identifier: str) -> Manga | None:
+    def get(self, identifier: str) -> Union[Manga, None]:
         response = self.__make_request(url=f'{self.__API_URL}/gallery/{identifier}')
         
         if response.status_code != 200:
