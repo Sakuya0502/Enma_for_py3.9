@@ -1,8 +1,8 @@
-from typing import Union, Optional
+
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
-from typing import Literal, Optional, TypedDict
+from typing import Literal, Optional, TypedDict, Union
 from enma.domain.entities.base import Entity
 
 @dataclass
