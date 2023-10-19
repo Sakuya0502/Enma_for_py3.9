@@ -48,7 +48,7 @@ class Manganato(IMangaRepository):
         chapters = chapter_list.find_all('li') if chapter_list else []
         return [chapter.find('a')['href'] for chapter in chapters]
     
-    def __create_chapter(self, url: str) -> Chapter | None:
+    def __create_chapter(self, url: str) -> Union[Chapter, None]:
         response = self.__make_request(url=url)
         
         if response.status_code != 200:
