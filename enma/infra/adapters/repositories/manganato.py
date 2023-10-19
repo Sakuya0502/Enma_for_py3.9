@@ -4,7 +4,7 @@ It contains functions and classes to interact with the nhentai API and retrieve 
 """
 
 from concurrent.futures import ThreadPoolExecutor
-from typing import Any, Optional, cast
+from typing import Any, Optional, cast, Union
 from urllib.parse import urlparse, urljoin
 from bs4 import BeautifulSoup, Tag
 
@@ -25,8 +25,8 @@ class Manganato(IMangaRepository):
 
     def __make_request(self, 
                        url: str,
-                       headers: dict[str, Any] | None = None,
-                       params: Optional[dict[str, str | int]] = None):
+                       headers: Optional[dict[str, Any]] = None,
+                       params: Optional[dict[str, Union[str, int]]] = None):
 
         headers = headers if headers is not None else {}
         params = params if params is not None else {}
