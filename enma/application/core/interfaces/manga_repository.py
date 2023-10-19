@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Union
 
 from enma.domain.entities.manga import Manga
 from enma.domain.entities.pagination import Pagination
@@ -7,7 +8,7 @@ from enma.domain.entities.search_result import SearchResult
 class IMangaRepository(ABC):
     @abstractmethod
     def get(self,
-            identifier: str) -> Manga | None:
+            identifier: str) -> Union[Manga, None]:
         ...
     
     @abstractmethod
