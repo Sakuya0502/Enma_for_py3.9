@@ -1,4 +1,4 @@
-
+from typing import Union, Optional
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
@@ -23,7 +23,7 @@ class Title:
     other: str = field(default='')
 
 class IMangaProps(TypedDict):
-    id: int | str
+    id: Union[int, str]
     created_at: datetime
     updated_at: datetime
     title: Title
@@ -32,7 +32,7 @@ class IMangaProps(TypedDict):
 
 @dataclass
 class Chapter:
-    id: str | int
+    id: Union[str, int]
     pages: list[Image] = field(default_factory=list)
 
     def add_page(self, page: Image) -> None:
@@ -41,7 +41,7 @@ class Chapter:
 @dataclass
 class Genre:
     name: str
-    id: str | int = field(default=0)
+    id: Union[str, int] = field(default=0)
 
 @dataclass
 class Manga(Entity[IMangaProps]):
@@ -51,19 +51,19 @@ class Manga(Entity[IMangaProps]):
     genres: list[Genre]
     chapters: list[Chapter]
     chapters_count: int
-    cover: Image | None
-    thumbnail: Image | None
+    cover: Union[Image, None]
+    thumbnail: Union[Image, None]
 
     def __init__(self,
                  title: Title,
                  chapters: list[Chapter],
-                 genres: list[Genre] | None = None,
-                 authors: list[str] | None = None,
-                 thumbnail: Image | None = None,
-                 cover: Image | None = None,
-                 id: int | str | None = None, 
-                 created_at: datetime | None = None, 
-                 updated_at: datetime | None = None):
+                 genres: Optional[list[Genre]] = None,
+                 authors: Optional[list[str]] = None,
+                 thumbnail: Optional[Image] = None,
+                 cover: Optional[Image] = None,
+                 id: Union[int, str, None] = None, 
+                 created_at: Optional[datetime] = None, 
+                 updated_at: Optional[datetime] = None):
         
         super().__init__(id=id,
                          created_at=created_at,
